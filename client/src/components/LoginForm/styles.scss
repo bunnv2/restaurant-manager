@@ -1,0 +1,46 @@
+@import 'styles/index.scss';
+
+.login {
+  width: 100%;
+  min-height: 500px;
+  background-color: $color-dark;
+  box-shadow: $color-black 0px 20px 30px -10px;
+  border-radius: $rounded-base;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  padding: $m-lg;
+  max-width: 400px;
+  gap: $m-lg;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $m-base;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $m-sm;
+    width: 100%;
+    align-items: center;
+  }
+  
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: $m-base;
+    width: 100%;
+  }
+
+  &__error {
+    color: $color-danger;
+  }
+
+  &__link {
+    align-self: flex-start;
+  }
+}
