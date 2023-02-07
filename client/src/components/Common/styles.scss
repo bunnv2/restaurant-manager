@@ -1,0 +1,88 @@
+@import "styles/index.scss";
+
+.button {
+  padding: $m-sm $m-base;
+  width: 100%;
+  background-color: $color-secondary;
+  border-radius: $rounded-sm;
+  border: 1px solid $color-primary;
+  color: $color-black;
+  font-weight: $font-normal;
+  font-size: $font-base;
+  cursor: pointer;
+
+  &.-rounded {
+    border-radius: $rounded-full;
+    width: $icon-size-base;
+    height: $icon-size-base;
+  }
+
+  &.-link {
+    padding: 0;
+    width: fit-content;
+    border: none;
+    color: $color-text;
+    text-decoration: underline;
+    text-underline-offset: calc($m-xs / 2);
+    background-color: transparent;
+  }
+}
+
+.input {
+  background-color: $color-text;
+  border: 1px solid $color-secondary;
+  border-radius: $rounded-base;
+  color: $color-body;
+  padding: $m-sm $m-base;
+  outline: none;
+  transition: all $transition-duration $transition-function;
+
+  &.-outlined {
+    background-color: $color-body;
+    color: $color-text;
+  }
+
+  &:hover {
+    background-color: rgba($color-text, 0.7);
+  }
+}
+
+.select {
+  width: 100%;
+  border: 1px solid $color-secondary;
+  border-radius: $rounded-base;
+  padding: $m-sm $m-base;
+  outline: none;
+  cursor: pointer;
+  background-color: $color-text;
+}
+
+.header {
+  font-weight: $font-bold;
+  text-align: center;
+
+  &.-h1 {
+    font-size: $font-2xl;
+  }
+
+  &.-h2 {
+    font-size: $font-xl;
+  }
+
+  &.-h3 {
+    font-size: $font-lg;
+  }
+}
+
+.text {
+  font-weight: $font-normal;
+  font-size: $font-base;
+  text-align: left;
+
+  &.-center {
+    text-align: center;
+  }
+  &.-right {
+    text-align: right;
+  }
+}
