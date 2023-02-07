@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { Formik, Form, ErrorMessage, FormikHelpers } from "formik"
 import * as Yup from "yup"
+import { toast } from "react-toastify"
 
-import { Button, Header, Text, CustomField } from "components/Common"
+import { Button, Header, Text, CustomField } from "components"
 
+import { useAuthContext } from "contexts"
 import { signIn } from "utils"
 
 import "./styles.scss"
@@ -19,6 +21,7 @@ type FormFieldType = {
 
 const LoginForm = ({ changeView }: Props) => {
   const navigate = useNavigate()
+  const { setToken } = useAuthContext()
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -34,13 +37,27 @@ const LoginForm = ({ changeView }: Props) => {
     password: "",
   }
 
-  const onSubmit = (
+  const onSubmit = async (
     values: FormFieldType,
     { resetForm }: FormikHelpers<FormFieldType>
-  ): void => {
-    signIn(values)
-    resetForm()
-    navigate('/app/dashboard')
+  ): Promise<void> => {
+    const data = await signIn(values)
+    console.log(data)
+    if (data.error) {
+      toast.error(data.error || "Something went wrong", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        theme: "dark",
+      })
+    } else {
+      setToken(data.message as string)
+      resetForm()
+      navigate("/app/dashboard")
+    }
   }
 
   return (

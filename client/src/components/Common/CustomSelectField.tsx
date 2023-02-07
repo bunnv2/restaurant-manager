@@ -1,6 +1,8 @@
 import { Field } from "formik"
 import { PropsWithChildren } from "react"
 
+import './styles.scss'
+
 type Props = {
   name: string,
 }

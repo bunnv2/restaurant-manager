@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom"
 import { Formik, Form, ErrorMessage, FormikHelpers } from "formik"
 import * as Yup from "yup"
 
-import { Button, CustomField, Header, Text } from "components/Common"
+import { Button, CustomField, CustomSelectField, Header, Text } from "components"
+
+import { signUp } from "utils"
 
 import "./styles.scss"
-import CustomSelectField from "components/Common/CustomSelectField"
-import { signUp } from "utils"
 
 type Props = {
   changeView: () => void

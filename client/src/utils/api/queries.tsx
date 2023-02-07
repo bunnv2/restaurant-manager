@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios"
 import { api } from "./api"
 
 type SignInProps = {
@@ -14,20 +15,14 @@ type SignUpProps = {
   phone: string
 }
 
-export const signIn = async (values: SignInProps): Promise<void> => {
-  try {
-    const response = await api.post("login", values)
-    console.log(response)
-  } catch (error) {
-    console.log(error)
-  }
+export const signIn = async (values: SignInProps): Promise<any> => {
+  const response = await api.post("login", values)
+
+  return response
 }
 
-export const signUp = async (values: SignUpProps): Promise<void> => {
-  try {
-    const response = await api.post("register", values)
-    console.log(response)
-  } catch (error) {
-    console.log(error)
-  }
+export const signUp = async (values: SignUpProps): Promise<AxiosResponse> => {
+  const response = await api.post("register", values)
+
+  return response
 }
