@@ -1,0 +1,10 @@
+@import "styles/index.scss";
+
+.auth {
+  background-color: $color-body;
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  width: 100vw;
+  padding: $m-lg;
+}
