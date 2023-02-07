@@ -1,0 +1,84 @@
+//----- fonts sizes and line-heights -----------------------------------------------------------------------------------
+$font-xs: 12px;
+$font-sm: 14px;
+$font-base: 16px;
+$font-md: 18px;
+$font-lg: 24px;
+$font-xl: 32px;
+$font-2xl: 40px;
+$font-3xl: 48px;
+$font-4xl: 72px;
+
+//----- spacings (margins/paddings) ------------------------------------------------------------------------------------
+$m-xs: 4px;
+$m-sm: 8px;
+$m-base: 12px;
+$m-md: 16px;
+$m-lg: 24px;
+$m-xl: 32px;
+$m-2xl: 48px;
+$m-3xl: 72px;
+
+//----- line heights ---------------------------------------------------------------------------------------------------
+$leading-this: 1;
+$leading-thight: 1.25;
+$leading-normal: 1.5;
+$leading-wide: 1.75;
+$leading-extra-wide: 2;
+
+//----- border radiuses ------------------------------------------------------------------------------------------------
+$rounded-sm: 4px;
+$rounded-base: 8px;
+$rounded-lg: 16px;
+$rounded-full: 50%;
+
+//----- breakpoints ----------------------------------------------------------------------------------------------------
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  2xl: 1600px,
+  3xl: 1920px,
+);
+
+//----- colors ---------------------------------------------------------------------------------------------------------
+$color-body: #282c34;
+$color-primary: #3F242B;
+$color-secondary: #6F7788;
+$color-tertiary: #705158;
+$color-text: #99ACCF;
+$color-dark: #344765;
+$color-black: #04080c;
+$color-link: #551a8b;
+$color-danger: #ff6961;
+$color-neutral-300: hsl(36deg 5% 85%);
+$color-neutral-400: hsl(36deg 5% 75%);
+$color-neutral-500: hsl(36deg 5% 62%);
+$color-neutral-600: hsl(36deg 5% 38%);
+$color-neutral-700: hsl(36deg 5% 28%);
+
+//----- fonts ----------------------------------------------------------------------------------------------------------
+$font-light: 400;
+$font-normal: 600;
+$font-bold: 800;
+
+//----- transitions ----------------------------------------------------------------------------------------------------
+$transition-duration: 0.3s;
+$transition-function: ease-in-out;
+
+//----- z-indexes ------------------------------------------------------------------------------------------------------
+$z-negative: -1;
+$z-lower: 10;
+$z-low: 20;
+$z-base: 30;
+$z-high: 40;
+$z-higher: 50;
+
+//----- icon sizes ------------------------------------------------------------------------------------------------------
+$icon-size-xs: 16px;
+$icon-size-sm: 32px;
+$icon-size-base: 48px;
+$icon-size-lg: 64px;
+$icon-size-xl: 72px;
