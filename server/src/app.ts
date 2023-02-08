@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 const user = process.env.MONGO_HOST
@@ -18,6 +19,7 @@ const port = 8080
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 const uri = `mongodb+srv://${user}:${pass}@restaurant-manager.ik79ss4.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { serverApi: { version: ServerApiVersion.v1 } });
@@ -53,7 +55,7 @@ app.post('/login', async (req, res) => {
   try {
     const { name, password } = req.body;
 
-    const user = await Restaurant.findOne({ name });
+    const user = await db.collection("restaurants").findOne({ name });
     if (!user) {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
@@ -72,16 +74,20 @@ app.post('/login', async (req, res) => {
       expiresIn: '1d'
     });
 
-    res.set('Authorization', `Bearer ${token}`);
-    res.status(200).json({ message: 'Logged in successfully' }).end();
+    res.cookie("token", token, {
+      maxAge: 1000 * 60 * 60 * 2,
+      httpOnly: true,
+    })
+    .sendStatus(200);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Error logging in' });
   }
 });
 
 app.get('/protected', async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
+    const token = req.cookies.token;
     if (!token) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
@@ -91,13 +97,12 @@ app.get('/protected', async (req, res) => {
       return res.status(500).json({ error: 'Error logging in' });
     }
 
-    const decoded = jwt.verify(token, secret);
+    const decoded = await jwt.verify(token, secret);
     if (!decoded) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-
     res.status(200).json({ message: 'Protected route' });
   } catch (error) {
-    res.status(500).json({ error: 'Error logging in' });
+      res.status(500).json({ error: 'Something went wrong' });
   }
 });
