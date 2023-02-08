@@ -4,7 +4,8 @@ import express from 'express'
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 dotenv.config();
 const user = process.env.MONGO_HOST
@@ -14,6 +15,7 @@ const pass = process.env.MONGO_PASSWORD
 const app = express()
 const port = 8080
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
