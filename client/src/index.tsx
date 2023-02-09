@@ -1,7 +1,13 @@
 import { createRoot } from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
-import { AuthScreen, AppScreen, DashboardScreen, TablesScreen } from "screens"
+import {
+  AuthScreen,
+  AppScreen,
+  DashboardScreen,
+  TablesScreen,
+  SettingsScreen,
+} from "screens"
 
 import { AuthContextProvider } from "contexts"
 
@@ -23,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "tables",
         element: <TablesScreen />,
+      },
+      {
+        path: "settings",
+        element: <SettingsScreen />,
       },
     ],
   },

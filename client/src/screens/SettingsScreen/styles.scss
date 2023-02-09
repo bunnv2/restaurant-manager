@@ -1,0 +1,11 @@
+@import "styles/index.scss";
+
+.settings {
+  padding: $m-base;
+  background-color: $color-dark;
+  box-shadow: $color-black 0px 20px 30px -10px;
+  border-radius: $rounded-base;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
