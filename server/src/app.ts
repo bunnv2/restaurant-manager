@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb';
 import { Restaurant } from './schemas/modules';
 import express from 'express'
 import dotenv from 'dotenv';
@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { publicLogged } from './middleware/verifyToken';
 
 dotenv.config();
 const user = process.env.MONGO_HOST
@@ -85,23 +86,15 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/protected', async (req, res) => {
+app.post('/logout', (req, res) => {
+  res.clearCookie('token').sendStatus(200);
+});
+
+app.get('/add-tables', publicLogged ,async (req : any, res : any) => {
+  const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    const secret = process.env.JWT_SECRET;
-    if (!secret) {
-      return res.status(500).json({ error: 'Error logging in' });
-    }
-
-    const decoded = await jwt.verify(token, secret);
-    if (!decoded) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-    res.status(200).json({ message: 'Protected route' });
+    console.log('hello ',restaurant)
+    res.send('add tables')
   } catch (error) {
       res.status(500).json({ error: 'Something went wrong' });
   }
