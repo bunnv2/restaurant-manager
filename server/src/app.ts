@@ -90,12 +90,93 @@ app.post('/logout', (req, res) => {
   res.clearCookie('token').sendStatus(200);
 });
 
-app.get('/add-tables', publicLogged ,async (req : any, res : any) => {
-  const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
+app.post('/add-tables', publicLogged ,async (req : any, res : any) => {
   try {
-    console.log('hello ',restaurant)
-    res.send('add tables')
+    const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
+    if (!restaurant) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    const tables = req.body.tables;
+    if (!tables) {
+      return res.status(400).json({ error: 'Invalid tables' });
+    }
+    const newTables = tables.map((table : any, index: number) => {
+      const existingTable = restaurant.tables.find((t : any) => t.number === table.number);
+      const isOcc = existingTable ? existingTable.isOccupied : false;
+      return {
+        number: index + 1,
+        capacity: table[index+1],
+        isOccupied: isOcc,
+      }
+    })
+    const newRestaurant = {
+      ...restaurant,
+      tables: newTables,
+    }
+    await db.collection("restaurants").updateOne({ _id: new ObjectId(req.user.id) }, { $set: newRestaurant });
+    res.status(201).json({message: 'Tables modified successfully'});
   } catch (error) {
-      res.status(500).json({ error: 'Something went wrong' });
+    console.log(error)
+      res.status(500).json("Server error");
   }
 });
+
+app.get('/get-tables', publicLogged ,async (req : any, res : any) => {
+  try {
+    const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
+    if (!restaurant) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+    const tables = restaurant.tables;
+    res.status(201).json(tables);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json("Server error");
+  }
+} );
+
+app.post('/add-meals', publicLogged ,async (req : any, res : any) => {
+  try {
+    const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
+    if (!restaurant) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    const meals = req.body.meals;
+    if (!meals) {
+      return res.status(400).json({ error: 'Invalid meals' });
+    }
+    const newMeals = meals.map((meal : any) => {
+      const {mealName, price, description} = meal;
+      return {
+        mealName,
+        price,
+        description,
+      }
+    })
+    const newRestaurant = {
+      ...restaurant,
+      meals: newMeals,
+    }
+    await db.collection("restaurants").updateOne({ _id: new ObjectId(req.user.id) }, { $set: newRestaurant });
+    res.status(201).json({message: 'Meals modified successfully'});
+  } catch (error) {
+    console.log(error)
+      res.status(500).json("Server error");
+  }
+} );
+
+app.get('/get-meals', publicLogged ,async (req : any, res : any) => {
+  try {
+    const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
+    if (!restaurant) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+    const meals = restaurant.meals;
+    res.status(201).json(meals);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json("Server error");
+  }
+} );
