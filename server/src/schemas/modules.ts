@@ -47,6 +47,11 @@ const ReceiptSchema = new Schema({
     },
     total: {
         type: Number,
+        required: false,
+    },
+    isClosed: {
+        type: Boolean,
+        default: false,
         required: true,
     },
 });

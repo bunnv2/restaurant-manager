@@ -21,7 +21,8 @@ export type Meal = {
 }
 
 export type Receipt = {
+    // objectID 
     tableNumber: number;
     meals: Record<string, Meal>;
-    total: number;
+    total?: number;
 }
