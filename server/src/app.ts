@@ -1,5 +1,5 @@
 import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb';
-import { Restaurant } from './schemas/modules';
+import { Receipt, Restaurant } from './schemas/modules';
 import express from 'express'
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { publicLogged } from './middleware/verifyToken';
+import { Receipt as ReceiptType, Restaurant as RestaurantType } from './types';
 
 dotenv.config();
 const user = process.env.MONGO_HOST
@@ -163,7 +164,7 @@ app.post('/add-meals', publicLogged ,async (req : any, res : any) => {
     res.status(201).json({message: 'Meals modified successfully'});
   } catch (error) {
     console.log(error)
-      res.status(500).json("Server error");
+    res.status(500).json("Something went wrong");
   }
 } );
 
@@ -176,7 +177,44 @@ app.get('/get-meals', publicLogged ,async (req : any, res : any) => {
     const meals = restaurant.meals;
     res.status(201).json(meals);
   } catch (error) {
-    console.log(error)
-    res.status(500).json("Server error");
+    res.status(500).json("Something went wrong");
   }
 } );
+
+app.get('/get-receipt', publicLogged ,async (req : any, res : any) => {
+  try {
+    const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
+    if (!restaurant) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+    // get params
+    const {table} = req.query;
+    const receipt = db.collection("receipts").findOne({ tableNumber:table });
+    if (!receipt) {
+      return res.status(200).json({ message: 'No receipt for this table' });
+    }
+    res.status(201).json(receipt);
+  } catch (error) {
+    console.log(error)
+      res.status(500).json("Something went wrong");
+  }
+} );
+
+// app.post('/add-receipt', publicLogged ,async (req : any, res : any) => {
+//   try {
+//     const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
+//     if (!restaurant) {
+//       return res.status(400).json({ error: 'Invalid email or password' });
+//     }
+//     const receiptData : ReceiptType = req.body.receipt;
+//     if (!receiptData) {
+//       return res.status(400).json({ error: 'Invalid receipt' });
+//     }
+
+//     const receipt = new Receipt(receiptData);
+//     res.status(201).json({message: 'Receipt added successfully'});
+//   } catch (error) {
+//       res.status(500).json("Something went wrong");
+//   }
+// }
+// );

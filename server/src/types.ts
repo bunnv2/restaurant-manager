@@ -19,3 +19,9 @@ export type Meal = {
     price: number;
     description: string;
 }
+
+export type Receipt = {
+    tableNumber: number;
+    meals: Record<string, Meal>;
+    total: number;
+}

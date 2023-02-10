@@ -36,6 +36,20 @@ const RestaurantSchema = new Schema({
     },
 });
 
-
+const ReceiptSchema = new Schema({
+    tableNumber: {
+        type: Number,
+        required: true,
+    },
+    meals: {
+        type: Object,
+        required: true,
+    },
+    total: {
+        type: Number,
+        required: true,
+    },
+});
 export const Restaurant = mongoose.model("Restaurant", RestaurantSchema);
-module.exports = { Restaurant };
+export const Receipt = mongoose.model("Receipt", ReceiptSchema);
+module.exports = { Restaurant, Receipt };
