@@ -9,22 +9,22 @@ import {
 } from "react"
 
 type ContextProps = {
-  token: string
-  setToken: Dispatch<SetStateAction<string>>
+  signedIn: boolean
+  setSignedIn: Dispatch<SetStateAction<boolean>>
 }
 
 const initialValues = {
-  token: "",
-  setToken: () => {},
+  signedIn: true,
+  setSignedIn: () => {},
 }
 
 export const AuthContext = createContext<ContextProps>(initialValues)
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [token, setToken] = useState<string>("")
+  const [signedIn, setSignedIn] = useState<boolean>(true)
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ signedIn, setSignedIn }}>
       {children}
     </AuthContext.Provider>
   )

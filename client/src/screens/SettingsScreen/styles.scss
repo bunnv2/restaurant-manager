@@ -6,6 +6,61 @@
   box-shadow: $color-black 0px 20px 30px -10px;
   border-radius: $rounded-base;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex: 1;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    gap: $m-base;
+  }
+
+  &__navbar {
+    padding-inline: $m-base;
+    display: flex;
+    gap: $m-lg;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__button {
+    background-color: $color-body;
+    color: $color-text;
+    border: 1px solid $color-secondary;
+    border-radius: $rounded-base;
+    padding: $m-base;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+
+    &.-active {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    &:hover {
+      background-color: rgba($color-body, 0.8);
+    }
+  }
+
+  &__view {
+    padding: 0 $m-base $m-lg;
+    flex: 1;
+    overflow: auto;
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  @include media-breakpoint-up(sm) {
+    &__navbar {
+      justify-content: center;
+      gap: $m-3xl;
+    }
+  }
 }

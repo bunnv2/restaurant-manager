@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom"
 import { Formik, Form, ErrorMessage, FormikHelpers } from "formik"
 import * as Yup from "yup"
+import { toast } from "react-toastify"
 
 import { Button, CustomField, CustomSelectField, Header, Text } from "components"
 
@@ -22,8 +22,6 @@ type FormFieldType = {
 }
 
 const RegisterForm = ({ changeView }: Props) => {
-  const navigate = useNavigate()
-
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(2, "Name must be at least 2 characters long")
@@ -53,13 +51,34 @@ const RegisterForm = ({ changeView }: Props) => {
     password: "",
   }
 
-  const onSubmit = (
+  const onSubmit = async (
     values: FormFieldType,
     { resetForm }: FormikHelpers<FormFieldType>
-  ): void => {
-    signUp(values)
+  ): Promise<void> => {
+    const { data, statusText } = await signUp(values)
+
+    if (!data) {
+      toast.error(statusText || "Something went wrong", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        theme: "dark",
+      })
+    } else {
+      toast("✅ Registered successfully, you can log in now!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        theme: "dark",
+      })
+    }
     resetForm()
-    navigate('/app/dashboard')
   }
 
   return (
