@@ -7,9 +7,10 @@ type Props = {
   name: string
   placeholder?: string
   outlined?: boolean
+  style?: object
 }
 
-const Input = ({ name, placeholder, outlined }: Props) => {
+const Input = ({ name, placeholder, outlined, style }: Props) => {
   const inputClasses = cx("input", {
     "-outlined": outlined,
   })
@@ -19,6 +20,7 @@ const Input = ({ name, placeholder, outlined }: Props) => {
       className={inputClasses}
       name={name}
       placeholder={placeholder}
+      style={style}
     />
   )
 }

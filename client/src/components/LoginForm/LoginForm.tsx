@@ -21,7 +21,7 @@ type FormFieldType = {
 
 const LoginForm = ({ changeView }: Props) => {
   const navigate = useNavigate()
-  const { setToken } = useAuthContext()
+  const { setSignedIn } = useAuthContext()
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -41,10 +41,11 @@ const LoginForm = ({ changeView }: Props) => {
     values: FormFieldType,
     { resetForm }: FormikHelpers<FormFieldType>
   ): Promise<void> => {
-    const data = await signIn(values)
-    console.log(data)
-    if (data.error) {
-      toast.error(data.error || "Something went wrong", {
+    const response = await signIn(values)
+    const { data, statusText } = response
+
+    if (!data) {
+      toast.error(statusText || "Something went wrong", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -54,7 +55,7 @@ const LoginForm = ({ changeView }: Props) => {
         theme: "dark",
       })
     } else {
-      setToken(data.message as string)
+      setSignedIn(true)
       resetForm()
       navigate("/app/dashboard")
     }
