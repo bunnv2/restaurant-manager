@@ -1,10 +1,20 @@
 import { createRoot } from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 
-import { AuthScreen, AppScreen, DashboardScreen, TablesScreen } from "screens"
+import {
+  AuthScreen,
+  AppScreen,
+  DashboardScreen,
+  TablesScreen,
+  SettingsScreen,
+} from "screens"
+
+import { ProtectedScreen } from "components"
 
 import { AuthContextProvider } from "contexts"
 
+import 'react-toastify/dist/ReactToastify.css';
 import "styles/index.scss"
 
 const router = createBrowserRouter([
@@ -14,7 +24,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/app",
-    element: <AppScreen />,
+    element: (
+      <ProtectedScreen>
+        <AppScreen />
+      </ProtectedScreen>
+    ),
     children: [
       {
         path: "dashboard",
@@ -23,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "tables",
         element: <TablesScreen />,
+      },
+      {
+        path: "settings",
+        element: <SettingsScreen />,
       },
     ],
   },
@@ -33,5 +51,6 @@ const root = createRoot(element!)
 root.render(
   <AuthContextProvider>
     <RouterProvider router={router} />
+    <ToastContainer />
   </AuthContextProvider>
 )

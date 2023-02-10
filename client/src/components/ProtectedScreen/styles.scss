@@ -1,0 +1,34 @@
+@import "styles/index.scss";
+
+.protected {
+  background-color: $color-body;
+  height: 100vh;
+  width: 100vw;
+  padding: $m-lg;
+  width: 100%;
+  display: grid;
+  place-items: center;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: $m-2xl;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__link {
+    background-color: $color-body;
+    color: $color-text;
+    border: 1px solid $color-secondary;
+    border-radius: $rounded-base;
+    padding: $m-base $m-base;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+
+    &:hover {
+      background-color: rgba($color-body, 0.8);
+    }
+  }
+}

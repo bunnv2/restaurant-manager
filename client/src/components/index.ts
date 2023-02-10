@@ -7,3 +7,8 @@ export { default as CustomSelectField } from "./Common/CustomSelectField"
 
 export { default as LoginForm } from "./LoginForm/LoginForm"
 export { default as RegisterForm } from "./RegisterForm/RegisterForm"
+
+export { default as ProtectedScreen } from "./ProtectedScreen/ProtectedScreen"
+
+export { default as AddTables } from "./AddTables/AddTables"
+export { default as AddMeals } from "./AddMeals/AddMeals"

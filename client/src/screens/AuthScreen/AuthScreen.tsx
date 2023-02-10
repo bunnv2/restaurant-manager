@@ -1,9 +1,7 @@
 import { useState } from "react"
-import { ToastContainer } from "react-toastify"
 
 import { LoginForm, RegisterForm } from "components"
 
-import 'react-toastify/dist/ReactToastify.css';
 import "./styles.scss"
 
 const AuthScreen = () => {
@@ -19,7 +17,6 @@ const AuthScreen = () => {
       ) : (
         <RegisterForm changeView={toggleView} />
       )}
-      <ToastContainer />
     </div>
   )
 }
