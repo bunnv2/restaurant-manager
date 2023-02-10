@@ -97,6 +97,9 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/add-tables', publicLogged ,async (req : any, res : any) => {
+  if (!req.user) {
+    return res.status(400).json({ error: 'Invalid email or password' });
+  }
   try {
     const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
     if (!restaurant) {
@@ -129,6 +132,9 @@ app.post('/add-tables', publicLogged ,async (req : any, res : any) => {
 });
 
 app.get('/get-tables', publicLogged ,async (req : any, res : any) => {
+  if (!req.user) {
+    return res.status(400).json({ error: 'Invalid email or password' });
+  }
   try {
     const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
     if (!restaurant) {
@@ -176,6 +182,9 @@ app.post('/add-meals', publicLogged ,async (req : any, res : any) => {
 } );
 
 app.get('/get-meals', publicLogged ,async (req : any, res : any) => {
+  if (!req.user) {
+    return res.status(400).json({ error: 'Invalid email or password' });
+  }
   try {
     const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
     if (!restaurant) {
@@ -211,7 +220,7 @@ app.post('/add-receipt', publicLogged ,async (req : any, res : any) => {
     if (!tableObj) {
       return res.status(200).json({ message: 'No table with this number' });
     }
-    const receipt = await db.collection("receipts").findOne({ tableNumber: receiptData.tableNumber, isClosed: false, restaurantId: new ObjectId(req.user.id) });
+    const receipt = await db.collection("receipts").findOne({ tableNumber: receiptData.tableNumber, isClosed: false, restaurantId: req.user.id });
 
     const total = Object(receiptData.meals).reduce((acc : number, meal : any) => {
       acc += meal.price;
@@ -229,7 +238,9 @@ app.post('/add-receipt', publicLogged ,async (req : any, res : any) => {
 
 app.get('/get-receipt', publicLogged ,async (req : any, res : any) => {
   try {
-    console.log(req.user)
+    if (!req.user) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
     const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
     if (!restaurant) {
       return res.status(400).json({ error: 'Invalid email or password' });
@@ -240,7 +251,7 @@ app.get('/get-receipt', publicLogged ,async (req : any, res : any) => {
       return res.status(200).json({ message: 'No table with this number' });
     }
     
-    const receipt = await db.collection("receipts").findOne({tableNumber: table, isClosed: false, restaurantId: new ObjectId(req.user.id)});
+    const receipt = await db.collection("receipts").findOne({tableNumber: table, isClosed: false, restaurantId: req.user.id});
 
     if (!receipt) {
       return res.status(200).json({ message: 'No receipt for this table' });
@@ -255,20 +266,27 @@ app.get('/get-receipt', publicLogged ,async (req : any, res : any) => {
 
 app.post('/end-receipt', publicLogged ,async (req : any, res : any) => {
   try {
-
+    if (!req.user) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
     const restaurant = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id) });
     if (!restaurant) {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
 
-    const table = Number(req.body.table);
-    console.log(typeof table)
-    const receipt = db.collection("receipts").findOne({ tableNumber:table, isClosed: false, restaurantId: new ObjectId(req.user.id) });
+    const table = Number(req.query.table);
+    console.log(typeof table,table)
+    const tableObj = await db.collection("restaurants").findOne({ _id: new ObjectId(req.user.id), tables: { $elemMatch: { number: table } } });
+    if (!tableObj) {
+      return res.status(200).json({ message: 'No table with this number' });
+    }
+    const receipt = await db.collection("receipts").findOne({ tableNumber:table, isClosed: false, restaurantId: req.user.id })
     if (!receipt) {
-      return res.status(200).json({ message: 'No receipt for this table' });
+      return res.status(200).json({ message: 'No receipt to end' });
     }
 
     await db.collection("receipts").updateOne({ tableNumber:table, isClosed: false, restaurantId: req.user.id }, { $set: { isClosed: true } }); // doesnt work lol
+    console.log(await db.collection("receipts").findOne({ tableNumber:table, isClosed: false, restaurantId: req.user.id }))
     await db.collection("restaurants").updateOne({ _id: new ObjectId(req.user.id) }, { $set: {tables: restaurant.tables.map((t : any) => t.number === table ? {...t, isOccupied: false} : t)} }); // works
     res.status(201).json({message: 'Receipt closed successfully'});
 
