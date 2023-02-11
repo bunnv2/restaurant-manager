@@ -55,7 +55,7 @@ const RegisterForm = ({ changeView }: Props) => {
     values: FormFieldType,
     { resetForm }: FormikHelpers<FormFieldType>
   ): Promise<void> => {
-    const { data, statusText } = await signUp(values)
+    const { data } = await signUp(values)
 
     if (!data) {
       toast.error("⛔ Failed to register, please try again!", {

@@ -75,7 +75,7 @@ const AddReceipt = ({ tableNumber, refetch, close }: Props) => {
       tableNumber,
       meals: actualMeals as Array<MealType>,
     }
-    const { data, statusText } = await addReceipt(queryData)
+    const { data } = await addReceipt(queryData)
 
     if (!data) {
       toast.error("⛔ Failed to add receipt, please try again!", {
