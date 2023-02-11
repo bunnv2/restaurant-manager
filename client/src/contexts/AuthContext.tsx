@@ -14,14 +14,14 @@ type ContextProps = {
 }
 
 const initialValues = {
-  signedIn: true,
+  signedIn: false,
   setSignedIn: () => {},
 }
 
 export const AuthContext = createContext<ContextProps>(initialValues)
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [signedIn, setSignedIn] = useState<boolean>(true)
+  const [signedIn, setSignedIn] = useState<boolean>(false)
 
   return (
     <AuthContext.Provider value={{ signedIn, setSignedIn }}>

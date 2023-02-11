@@ -23,8 +23,26 @@ type AddMealsProps = {
   meals: Array<any>
 }
 
+type Meal = {
+  mealName: string
+  description: string
+  price: number
+}
+
+type AddReceiptProps = {
+  tableNumber: number
+  meals: Array<Meal>
+  total?: number
+}
+
 export const signIn = async (values: SignInProps): Promise<AxiosResponse> => {
   const response = await api.post("login", values)
+
+  return response
+}
+
+export const signOut = async (): Promise<AxiosResponse> => {
+  const response = await api.post("logout")
 
   return response
 }
@@ -57,7 +75,9 @@ export const getTables = async (): Promise<AxiosResponse> => {
   return response
 }
 
-export const addMeals = async (values: AddMealsProps): Promise<AxiosResponse> => {
+export const addMeals = async (
+  values: AddMealsProps
+): Promise<AxiosResponse> => {
   const tablesTransformed = values.meals.map((item) => {
     const { name, description, price } = item
 
@@ -79,5 +99,31 @@ export const addMeals = async (values: AddMealsProps): Promise<AxiosResponse> =>
 
 export const getMeals = async (): Promise<AxiosResponse> => {
   const response = await api.get("get-meals")
+  return response
+}
+
+export const addReceipt = async (
+  data: AddReceiptProps
+): Promise<AxiosResponse> => {
+  const response = await api.post("add-receipt", { receipt: data })
+
+  return response
+}
+
+export const getReceipt = async (
+  tableNumber: number
+): Promise<AxiosResponse> => {
+  const response = await api.get("get-receipt", {
+    params: { table: tableNumber },
+  })
+  return response
+}
+
+export const endReceipt = async (
+  tableNumber: number
+): Promise<AxiosResponse> => {
+  const response = await api.post("end-receipt", null, {
+    params: { table: tableNumber },
+  })
   return response
 }

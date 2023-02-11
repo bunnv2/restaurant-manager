@@ -5,11 +5,12 @@ import './styles.scss'
 
 type Props = {
   name: string,
+  style?: object
 }
 
-const CustomSelectField = ({ name, children }: PropsWithChildren<Props>) => {
+const CustomSelectField = ({ name, style, children }: PropsWithChildren<Props>) => {
   return (
-    <Field as="select" className="select" name={name}>
+    <Field as="select" className="select" name={name} style={style}>
       {children}
     </Field>
   )

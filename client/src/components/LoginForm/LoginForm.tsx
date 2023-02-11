@@ -47,7 +47,7 @@ const LoginForm = ({ changeView }: Props) => {
     if (!data) {
       toast.error(statusText || "Something went wrong", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -57,7 +57,7 @@ const LoginForm = ({ changeView }: Props) => {
     } else {
       setSignedIn(true)
       resetForm()
-      navigate("/app/dashboard")
+      navigate("/app/tables")
     }
   }
 
