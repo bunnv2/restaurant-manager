@@ -1,9 +1,13 @@
-import './styles.scss'
+import { TablesList } from "components"
 
-const TablesScreen = () => {
-  return (
-    <div>TablesScreen</div>
-  )
-}
+import "./styles.scss"
+
+const TablesScreen = () => (
+  <div className="tables">
+    <div className="tables__container">
+      <TablesList />
+    </div>
+  </div>
+)
 
 export default TablesScreen

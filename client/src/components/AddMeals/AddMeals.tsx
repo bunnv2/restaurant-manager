@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Formik, Form, FieldArray, FormikHelpers } from "formik"
+import { Formik, Form, FieldArray } from "formik"
 import * as Yup from "yup"
 import { toast } from "react-toastify"
 
@@ -31,7 +31,7 @@ const AddMeals = () => {
       } else {
         toast.error(statusText || "Something went wrong", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -77,7 +77,7 @@ const AddMeals = () => {
     if (!data) {
       toast.error(statusText || "Something went wrong", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -87,7 +87,7 @@ const AddMeals = () => {
     } else {
       toast(`✅ ${data.message}` || "✅ Meals added!", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,

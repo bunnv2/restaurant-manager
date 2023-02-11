@@ -5,9 +5,9 @@ import { ToastContainer } from "react-toastify"
 import {
   AuthScreen,
   AppScreen,
-  DashboardScreen,
   TablesScreen,
   SettingsScreen,
+  NotFoundScreen,
 } from "screens"
 
 import { ProtectedScreen } from "components"
@@ -31,10 +31,6 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "dashboard",
-        element: <DashboardScreen />,
-      },
-      {
         path: "tables",
         element: <TablesScreen />,
       },
@@ -44,6 +40,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '*',
+    element: <NotFoundScreen />
+  }
 ])
 
 const element = document.getElementById("root")

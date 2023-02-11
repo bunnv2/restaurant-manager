@@ -1,2 +1,13 @@
 export { api } from "./api/api"
-export { signIn, signUp, addTables, getTables, addMeals, getMeals } from "./api/queries"
+export {
+  signIn,
+  signOut,
+  signUp,
+  addTables,
+  getTables,
+  addMeals,
+  getMeals,
+  addReceipt,
+  getReceipt,
+  endReceipt,
+} from "./api/queries"

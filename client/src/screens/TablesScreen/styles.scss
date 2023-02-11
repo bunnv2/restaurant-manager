@@ -1,0 +1,22 @@
+@import "styles/index.scss";
+
+.tables {
+  padding: $m-base;
+  background-color: $color-dark;
+  box-shadow: $color-black 0px 20px 30px -10px;
+  border-radius: $rounded-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  overflow: auto;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    gap: $m-base;
+  }
+}

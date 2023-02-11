@@ -60,7 +60,7 @@ const RegisterForm = ({ changeView }: Props) => {
     if (!data) {
       toast.error(statusText || "Something went wrong", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -70,7 +70,7 @@ const RegisterForm = ({ changeView }: Props) => {
     } else {
       toast("✅ Registered successfully, you can log in now!", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
