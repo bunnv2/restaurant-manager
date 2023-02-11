@@ -30,12 +30,12 @@ const AddReceipt = ({ tableNumber, refetch, close }: Props) => {
 
   useEffect(() => {
     const fetchMeals = async () => {
-      const { data, statusText } = await getMeals()
+      const { data } = await getMeals()
 
       if (data.length > 0) {
         setMeals(data)
       } else {
-        toast.error(statusText || "Something went wrong", {
+        toast.error("⛔ No meals yet, add some in Settings tab!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -78,7 +78,7 @@ const AddReceipt = ({ tableNumber, refetch, close }: Props) => {
     const { data, statusText } = await addReceipt(queryData)
 
     if (!data) {
-      toast.error(statusText || "Something went wrong", {
+      toast.error("⛔ Failed to add receipt, please try again!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,

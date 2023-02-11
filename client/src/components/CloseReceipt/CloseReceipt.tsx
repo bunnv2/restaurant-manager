@@ -36,12 +36,12 @@ const CloseReceipt = ({ tableNumber, refetch, close }: Props) => {
 
   useEffect(() => {
     const fetchReceipt = async () => {
-      const { data, statusText } = await getReceipt(tableNumber)
+      const { data } = await getReceipt(tableNumber)
 
       if (data) {
         setReceipt(data)
       } else {
-        toast.error(statusText || "Something went wrong", {
+        toast.error("⛔ Failed to get receipt, please try again!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -56,10 +56,10 @@ const CloseReceipt = ({ tableNumber, refetch, close }: Props) => {
   }, [tableNumber])
 
   const closeReceipt = async () => {
-    const { data, statusText } = await endReceipt(tableNumber)
+    const { data } = await endReceipt(tableNumber)
 
     if (!data) {
-      toast.error(statusText || "Something went wrong", {
+      toast.error("⛔ Failed to close receipt, please try again!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,

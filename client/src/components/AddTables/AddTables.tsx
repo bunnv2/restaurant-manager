@@ -24,12 +24,12 @@ const AddTables = () => {
 
   useEffect(() => {
     const fetchTables = async () => {
-      const { data, statusText } = await getTables()
+      const { data } = await getTables()
 
       if (data.length > 0) {
         setInitialData(data)
       } else {
-        toast.error(statusText || "Something went wrong", {
+        toast.error("⛔ No tables yet, add some!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -65,10 +65,10 @@ const AddTables = () => {
   const onSubmit = async (
     values: FormFieldType,
   ): Promise<void> => {
-    const { data, statusText } = await addTables(values)
+    const { data } = await addTables(values)
 
     if (!data) {
-      toast.error(statusText || "Something went wrong", {
+      toast.error("⛔ Failed to add tables, please try again!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,

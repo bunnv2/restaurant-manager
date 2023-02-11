@@ -23,13 +23,13 @@ const AddMeals = () => {
   const [initialData, setInitialData] = useState<Array<ResponseMealProps>>([])
 
   useEffect(() => {
-    const fetchTables = async () => {
-      const { data, statusText } = await getMeals()
+    const fetchMeals = async () => {
+      const { data } = await getMeals()
 
       if (data.length > 0) {
         setInitialData(data)
       } else {
-        toast.error(statusText || "Something went wrong", {
+        toast.error("⛔ No meals yet, add some!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -41,7 +41,7 @@ const AddMeals = () => {
       }
     }
 
-    fetchTables()
+    fetchMeals()
   }, [])
 
   const initialDataTransormed = initialData.map((item) => {
@@ -72,10 +72,10 @@ const AddMeals = () => {
   })
 
   const onSubmit = async (values: FormFieldType): Promise<void> => {
-    const { data, statusText } = await addMeals(values)
+    const { data } = await addMeals(values)
 
     if (!data) {
-      toast.error(statusText || "Something went wrong", {
+      toast.error("⛔ Failed to add meal, plese try again!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,

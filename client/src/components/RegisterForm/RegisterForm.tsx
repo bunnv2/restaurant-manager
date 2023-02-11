@@ -58,7 +58,7 @@ const RegisterForm = ({ changeView }: Props) => {
     const { data, statusText } = await signUp(values)
 
     if (!data) {
-      toast.error(statusText || "Something went wrong", {
+      toast.error("⛔ Failed to register, please try again!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -79,6 +79,7 @@ const RegisterForm = ({ changeView }: Props) => {
       })
     }
     resetForm()
+    changeView()
   }
 
   return (
@@ -128,9 +129,9 @@ const RegisterForm = ({ changeView }: Props) => {
             </ErrorMessage>
           </div>
           <span className="register__link">
-            New client?{" "}
+            Already have account?{" "}
             <Button type="button" link onClick={changeView}>
-              Register
+              Login
             </Button>
           </span>
           <Button

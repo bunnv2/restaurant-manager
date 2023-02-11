@@ -42,10 +42,10 @@ const LoginForm = ({ changeView }: Props) => {
     { resetForm }: FormikHelpers<FormFieldType>
   ): Promise<void> => {
     const response = await signIn(values)
-    const { data, statusText } = response
+    const { data } = response
 
     if (!data) {
-      toast.error(statusText || "Something went wrong", {
+      toast.error("⛔ Failed to log in, please try again!", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,

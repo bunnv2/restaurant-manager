@@ -17,12 +17,12 @@ const TablesList = () => {
   const [tables, setTables] = useState<Array<TablesType>>([])
 
   const fetchTables = async () => {
-    const {data, statusText} = await getTables()
+    const {data } = await getTables()
 
     if(data.length > 0) {
       setTables(data)
     } else {
-      toast.error(statusText || "Something went wrong", {
+      toast.error("⛔ No tables yet, add some in Settings tab!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
