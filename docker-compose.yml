@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: ./server/ # Replace with the path to your backend application
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - /node_modules
+  frontend:
+    build:
+      context: ./client # Replace with the path to your frontend application
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - /node_modules
